@@ -12,7 +12,7 @@ A API fornece endpoints para manipulação de usuários e clientes. Este README 
 3. Selecione "Preferences".
 4. Na guia "Data", clique em "Import Data" e depois em "From File".
 5. Navegue até o diretório onde você baixou o repositório da API.
-6. Selecione o arquivo `insomnia_requests.json`.
+6. Selecione o arquivo `insomnia_requests.json` no diretório `arquivosInstalacao`.
 7. Clique em "Import".
 
 **Configurando as variáveis de ambiente:**
