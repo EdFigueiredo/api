@@ -41,6 +41,28 @@
 2. **Importe as configurações da API:**
    - Siga as instruções fornecidas anteriormente para importar as configurações da API usando os arquivos `insomnia_requests.json` do diretório `arquivosInstalacao`.
 
+### Extensão "REST Client" para Visual Studio Code
+
+A extensão "REST Client" para o Visual Studio Code é uma ferramenta poderosa que permite fazer requisições HTTP diretamente do seu editor de código. Abaixo estão algumas instruções sobre como instalar e usar essa extensão:
+
+## Instalação da Extensão
+
+1. Abra o Visual Studio Code.
+2. Na barra lateral esquerda, clique no ícone de extensões (ou pressione Ctrl+Shift+X).
+3. No campo de pesquisa, digite "REST Client".
+4. A extensão "REST Client" deve aparecer nos resultados. Clique no botão "Instalar".
+
+## Como Usar
+
+1. Arquivo com a extensão `.http` no repositório do projeto.
+2. Dentro deste arquivo, temos algumas das requisições HTTP usando uma sintaxe simples e amigável.
+3. As requisições podem ser organizadas em blocos, cada um começando com um comentário indicando o método HTTP e o endpoint da requisição.
+4. Você pode adicionar parâmetros, headers, corpo da requisição e até mesmo variáveis.
+5. Para enviar uma requisição, coloque o cursor na linha da requisição e pressione Ctrl+Alt+R.
+
+![image](https://github.com/EdFigueiredo/api/assets/86436713/7780296b-d578-43b0-b7e7-8824b35b64e7)
+
+
 ### Arquivo de Instalação do Banco de Dados
 
 - O arquivo `query.sql` no diretório `arquivosInstalacao` contém o script SQL necessário para instalar o banco de dados com as tabelas de clientes e usuários, incluindo os campos necessários para o funcionamento completo da API.
