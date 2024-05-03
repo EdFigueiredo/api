@@ -1,6 +1,3 @@
-### API
-Este é o repositório oficial da API.
-
 #### Descrição
 A API fornece endpoints para manipulação de usuários e clientes. Este README contém instruções sobre como baixar e configurar o Insomnia para fazer requisições aos diferentes endpoints da API.
 
