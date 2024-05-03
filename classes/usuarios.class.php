@@ -42,7 +42,7 @@ class Usuarios
                     ], $GLOBALS['secretJWT']);
 
                     $db->query("UPDATE usuarios SET token = '$token' WHERE id = $idDB");
-                    //echo json_encode(['token' => $token, 'data' => JWT::decode($token, $secretJWT)]);
+                    echo json_encode(['token' => $token, 'data' => JWT::decode($token, $secretJWT)]);
                 } else {
                     if (!$validPassword) {
                         echo json_encode(['ERROR', 'invalid password']);
@@ -89,5 +89,52 @@ class Usuarios
         else :
             return false;
         endif;
+    }
+
+    public function cadastrar()
+    {
+        if ($_POST) {
+            if (!$_POST['login'] or !$_POST['senha']) {
+                echo json_encode(['ERRO' => 'Falta informações!']);
+                exit;
+            } else {
+                $login = addslashes(htmlspecialchars($_POST['login'])) ?? '';
+                $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT); // Criptografa a senha antes de salvar no banco
+    
+                // Verifica se o login já está em uso
+                $db = DB::connect();
+                $checkUserQuery = $db->prepare("SELECT id FROM usuarios WHERE login = :login");
+                $checkUserQuery->execute([':login' => $login]);
+                $existingUser = $checkUserQuery->fetch(PDO::FETCH_ASSOC);
+    
+                if ($existingUser) {
+                    echo json_encode(['ERRO' => 'Este login já está em uso. Por favor, escolha outro.']);
+                    exit;
+                }
+    
+                // Insere o usuário no banco de dados
+                $insertUserQuery = $db->prepare("INSERT INTO usuarios (login, senha) VALUES (:login, :senha)");
+                $exec = $insertUserQuery->execute([':login' => $login, ':senha' => $senha]);
+    
+                if ($exec) {
+                    // Após inserir o usuário com sucesso, gere o token
+                    $idDB = $db->lastInsertId(); // Obtém o ID do usuário recém-cadastrado
+                    $expire_in = time() + 60000;
+                    $token = JWT::encode([
+                        'id' => $idDB,
+                        'name' => $login,
+                        'expires_in' => $expire_in,
+                    ], $GLOBALS['secretJWT']);
+                    $db->query("UPDATE usuarios SET token = '$token' WHERE id = $idDB");
+    
+                    echo json_encode(['mensagem' => 'Usuário cadastrado com sucesso!', 'token' => $token]);
+                } else {
+                    echo json_encode(['ERRO' => 'Erro ao cadastrar usuário.']);
+                }
+            }
+        } else {
+            echo json_encode(['ERRO' => 'Falta informações!']);
+            exit;
+        }
     }
 }

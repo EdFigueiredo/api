@@ -33,7 +33,7 @@ class Clientes
         }
     }
 
-    public function inserir()
+    public function adiciona()
     {
         $query = "INSERT INTO clientes (";
         $cont = 1;
@@ -93,8 +93,8 @@ class Clientes
             }
             $cont++;
         }
-        $query .= "WHERE id= {$param}";
-
+        $query .= "WHERE id={$param}";
+        //echo $query; die;
         $database = DB::connect();
         $updateQuery = $database->prepare($query);
         $execUpdate = $updateQuery->execute();
@@ -105,17 +105,18 @@ class Clientes
             echo json_encode(["dados" => 'Erro ao atualizar dados.']);
         }
     }
-
-    public function deletar()
+    public function deletar($param)
     {
         $database = DB::connect();
-        $deleteQuery = $database->prepare("DELETE FROM clientes WHERE id={$param}");
+        $deleteQuery = $database->prepare("DELETE FROM clientes WHERE id = :id");
+        $deleteQuery->bindParam(':id', $param, PDO::PARAM_INT);
         $execDelete = $deleteQuery->execute();
-        if($execDelete)
-        {
+        $rowCount = $deleteQuery->rowCount();
+    
+        if ($execDelete && $rowCount > 0) {
             echo json_encode(["dados" => 'Dados removidos com sucesso!']);
         } else {
-            echo json_encode(["dados" => 'Erro ao removidos dados.']);
+            echo json_encode(["dados" => 'Erro ao remover dados.']);
         }
     }
 }

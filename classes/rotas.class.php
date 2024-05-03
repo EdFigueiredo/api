@@ -24,7 +24,7 @@ class Rotas
         $methodServer = isset($_POST['_method']) ? $_POST['_method'] : $methodServer;
         $rota = $methodServer.":/".$rota;
 
-        
+        //print_r($rota);
         if (substr_count($rota, "/") >= 3) {
             $param = substr($rota, strrpos($rota, "/")+1);
             $rota = substr($rota, 0, strrpos($rota, "/"))."/[PARAM]";
