@@ -2,13 +2,15 @@
 
 class Usuarios
 {
-    public static function login()
+
+    public function login()
     {
         if ($_POST) {
             if (!$_POST['login'] or !$_POST['senha']) {
                 echo json_encode(['ERRO' => 'Falta informacoes!']);
                 exit;
             } else {
+
                 $login = addslashes(htmlspecialchars($_POST['login'])) ?? '';
                 $senha = addslashes(htmlspecialchars($_POST['senha'])) ?? '';
                 $secretJWT = $GLOBALS['secretJWT'];
@@ -40,7 +42,7 @@ class Usuarios
                     ], $GLOBALS['secretJWT']);
 
                     $db->query("UPDATE usuarios SET token = '$token' WHERE id = $idDB");
-                    echo json_encode(['token' => $token, 'data' => JWT::decode($token, $secretJWT)]);
+                    //echo json_encode(['token' => $token, 'data' => JWT::decode($token, $secretJWT)]);
                 } else {
                     if (!$validPassword) {
                         echo json_encode(['ERROR', 'invalid password']);
@@ -55,10 +57,11 @@ class Usuarios
 
     public static function verificar()
     {
+        
         $headers = apache_request_headers();
         if (isset($headers['authorization'])) {
             $token = str_replace("Bearer ", "", $headers['authorization']);
-        } else if (isset($headers['Authorization'])) {
+        } else if (isset($headers['Authorization'])) { //Nesse método conseguimos efetuar as requisições via Insominia/Postman devido ao Authorization
             $token = str_replace("Bearer ", "", $headers['Authorization']);
         } else {
             echo json_encode(['ERRO' => 'Você não está logado, ou seu token é inválido.']);
