@@ -7,11 +7,14 @@ class Clientes
         $database = DB::connect();
         $consult = $database->prepare("SELECT * FROM clientes ORDER BY nome");
         $consult->execute();
-        $object = $consult->fetchAll(PDO::FETCH_ASSOC);
-    
-        if($object) 
-        {
-            echo json_encode(["dados" => $object]);
+        $objects = $consult->fetchAll(PDO::FETCH_ASSOC);
+
+        if($objects) {
+            foreach ($objects as &$object) {
+                $object['data_cadastro'] = date('d/m/Y', strtotime($object['data_cadastro']));
+                $object['data_nascimento'] = date('d/m/Y', strtotime($object['data_nascimento']));
+            }
+            echo json_encode(["dados" => $objects], JSON_UNESCAPED_SLASHES);
         } else {
             echo json_encode(["dados" => 'Não existem dados a serem retornados']);
         }
