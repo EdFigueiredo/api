@@ -39,7 +39,7 @@
    - Após a instalação, abra o Insomnia.
 
 2. **Importe as configurações da API:**
-   - Siga as instruções fornecidas anteriormente para importar as configurações da API usando os arquivos `insomnia_requests.json` e `insomnia_environment.json` do diretório `arquivosInstalacao`.
+   - Siga as instruções fornecidas anteriormente para importar as configurações da API usando os arquivos `insomnia_requests.json` do diretório `arquivosInstalacao`.
 
 3. **Faça requisições à API:**
    - Após configurar o Insomnia, você pode começar a fazer requisições à API conforme descrito nas instruções anteriores.
