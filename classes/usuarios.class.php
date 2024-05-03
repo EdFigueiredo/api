@@ -93,44 +93,60 @@ class Usuarios
 
     public function cadastrar()
     {
-        if ($_POST) {
-            if (!$_POST['login'] or !$_POST['senha']) {
+        if ($_POST) 
+        {
+            $login = $_POST['login'] ?? '';
+            $senha = $_POST['senha'] ?? '';
+    
+            if (empty($login) || empty($senha)) 
+            {
                 echo json_encode(['ERRO' => 'Falta informações!']);
                 exit;
+            }
+    
+            if (!preg_match('/^[a-zA-Z0-9]{5,15}$/', $login)) 
+            {
+                echo json_encode(['ERRO' => 'O login deve ter entre 5 e 15 caracteres alfanuméricos.']);
+                exit;
+            }
+    
+            if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,20}$/', $senha)) 
+            {
+                echo json_encode(['ERRO' => 'A senha deve ter entre 6 e 20 caracteres, pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial.']);
+                exit;
+            }
+    
+            $login = addslashes(htmlspecialchars($login));
+            $senha = password_hash($senha, PASSWORD_DEFAULT);
+    
+            $db = DB::connect();
+            $checkUserQuery = $db->prepare("SELECT id FROM usuarios WHERE login = :login");
+            $checkUserQuery->execute([':login' => $login]);
+            $existingUser = $checkUserQuery->fetch(PDO::FETCH_ASSOC);
+    
+            if ($existingUser) 
+            {
+                echo json_encode(['ERRO' => 'Este login já está em uso. Por favor, escolha outro.']);
+                exit;
+            }
+    
+            $insertUserQuery = $db->prepare("INSERT INTO usuarios (login, senha) VALUES (:login, :senha)");
+            $exec = $insertUserQuery->execute([':login' => $login, ':senha' => $senha]);
+    
+            if ($exec) 
+            {
+                $idDB = $db->lastInsertId();
+                $expire_in = time() + 60000;
+                $token = JWT::encode([
+                    'id' => $idDB,
+                    'name' => $login,
+                    'expires_in' => $expire_in,
+                ], $GLOBALS['secretJWT']);
+                $db->query("UPDATE usuarios SET token = '$token' WHERE id = $idDB");
+    
+                echo json_encode(['mensagem' => 'Usuário cadastrado com sucesso!', 'token' => $token]);
             } else {
-                $login = addslashes(htmlspecialchars($_POST['login'])) ?? '';
-                $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT); // Criptografa a senha antes de salvar no banco
-    
-                // Verifica se o login já está em uso
-                $db = DB::connect();
-                $checkUserQuery = $db->prepare("SELECT id FROM usuarios WHERE login = :login");
-                $checkUserQuery->execute([':login' => $login]);
-                $existingUser = $checkUserQuery->fetch(PDO::FETCH_ASSOC);
-    
-                if ($existingUser) {
-                    echo json_encode(['ERRO' => 'Este login já está em uso. Por favor, escolha outro.']);
-                    exit;
-                }
-    
-                // Insere o usuário no banco de dados
-                $insertUserQuery = $db->prepare("INSERT INTO usuarios (login, senha) VALUES (:login, :senha)");
-                $exec = $insertUserQuery->execute([':login' => $login, ':senha' => $senha]);
-    
-                if ($exec) {
-                    // Após inserir o usuário com sucesso, gere o token
-                    $idDB = $db->lastInsertId(); // Obtém o ID do usuário recém-cadastrado
-                    $expire_in = time() + 60000;
-                    $token = JWT::encode([
-                        'id' => $idDB,
-                        'name' => $login,
-                        'expires_in' => $expire_in,
-                    ], $GLOBALS['secretJWT']);
-                    $db->query("UPDATE usuarios SET token = '$token' WHERE id = $idDB");
-    
-                    echo json_encode(['mensagem' => 'Usuário cadastrado com sucesso!', 'token' => $token]);
-                } else {
-                    echo json_encode(['ERRO' => 'Erro ao cadastrar usuário.']);
-                }
+                echo json_encode(['ERRO' => 'Erro ao cadastrar usuário.']);
             }
         } else {
             echo json_encode(['ERRO' => 'Falta informações!']);

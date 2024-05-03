@@ -27,7 +27,9 @@ class Clientes
     
         if($object) 
         {
-            echo json_encode(["dados" => $object]);
+            $object->data_cadastro = date('d/m/Y', strtotime($object->data_cadastro));
+            $object->data_nascimento = date('d/m/Y', strtotime($object->data_nascimento));
+            echo json_encode(["dados" => $object], JSON_UNESCAPED_SLASHES);
         } else {
             echo json_encode(["dados" => 'Não existem dados a serem retornados']);
         }

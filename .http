@@ -7,16 +7,15 @@ login=elvira
 ###
 
 GET http://localhost/api/clientes/listar HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywibmFtZSI6bnVsbCwiZXhwaXJlc19pbiI6MTcxNDc3NjUyNH0.PSOFAgLwOVnrb98tL46gEy1ILcenIy-YBaywC3dRSWY
-
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywibmFtZSI6bnVsbCwiZXhwaXJlc19pbiI6MTcxNDgwMjQ1Mn0.wFXEG4Rb1tdWeF-V1Wfm_912V-Pv3r5_i2coU2EjXAw
 ###
 
 GET http://localhost/api/clientes/listar/1 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywibmFtZSI6bnVsbCwiZXhwaXJlc19pbiI6MTcxNDc3NjUyNH0.PSOFAgLwOVnrb98tL46gEy1ILcenIy-YBaywC3dRSWY
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywibmFtZSI6bnVsbCwiZXhwaXJlc19pbiI6MTcxNDc3Nzk4OH0.LO1SoizFQaL8iToIDGIzM6v5UKGEf7eSJqFiGKt_m8E
 ###
 
 POST http://localhost/api/clientes/adiciona
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywibmFtZSI6bnVsbCwiZXhwaXJlc19pbiI6MTcxNDc3Njc2MH0.O1yeiivR8A_DKVDpUODE0B2OM2uH0Uni4fSdg0SlIWQ
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywibmFtZSI6bnVsbCwiZXhwaXJlc19pbiI6MTcxNDc3Nzk4OH0.LO1SoizFQaL8iToIDGIzM6v5UKGEf7eSJqFiGKt_m8E
 Content-Type: application/x-www-form-urlencoded
 
 nome=Gustavo
@@ -30,17 +29,17 @@ nome=Gustavo
 ###
 
 
-POST http://localhost/api/clientes/atualizar/16 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6IkVkc29uIEZpZ3VlaXJlZG8iLCJleHBpcmVzX2luIjoxNzE0NzYzMDc1fQ.vT_QERwIppF4-9slUPvsEM53WczBAtgAIyIutVo-3vs
+POST http://localhost/api/clientes/atualizar/18 HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywibmFtZSI6bnVsbCwiZXhwaXJlc19pbiI6MTcxNDc3Nzk4OH0.LO1SoizFQaL8iToIDGIzM6v5UKGEf7eSJqFiGKt_m8E
 Content-Type: application/x-www-form-urlencoded
 
 _method=PUT
-&nome=Helen
+&nome=Helen2
 
 ###
 
-DELETE http://localhost/api/clientes/deletar/2 HTTP/1.1
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywibmFtZSI6bnVsbCwiZXhwaXJlc19pbiI6MTcxNDc3NjUyNH0.PSOFAgLwOVnrb98tL46gEy1ILcenIy-YBaywC3dRSWY
+DELETE http://localhost/api/clientes/deletar/18 HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywibmFtZSI6bnVsbCwiZXhwaXJlc19pbiI6MTcxNDc3Nzk4OH0.LO1SoizFQaL8iToIDGIzM6v5UKGEf7eSJqFiGKt_m8E
 Content-Type: application/x-www-form-urlencoded
 
 _method=DELETE
